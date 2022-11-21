@@ -1,9 +1,10 @@
 import React from 'react';
+import Form from '../Form';
 import './style.scss'
 
 function Item(props) {
 
-    const formattedPrice=`${props.price.toFixed(2)} грн`;
+    const formattedPrice=`$${props.price.toFixed(2)}`;
     return (
         <li className='meal'>
             <div>
@@ -11,7 +12,7 @@ function Item(props) {
                 <div className='description'>{props.description}</div>
                 <div className='price'>{formattedPrice }</div>
             </div>
-            <div></div>
+            <div><Form id={props.id}/></div>
         </li>
     );
 }
