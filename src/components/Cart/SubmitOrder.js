@@ -40,12 +40,13 @@ function SubmitOrder(props) {
   const confirmOrderHandler = (e) => {
     e.preventDefault();
     if (!isFormValid) {
+      alert('Form not valid!');
       return;
     }
 
-    console.log(name);
-    console.log(address);
-    console.log(phone);
+    // console.log(name);
+    // console.log(address);
+    // console.log(phone);
 
     resetNameInputValues();
     resetAddressInputValues();
@@ -55,7 +56,6 @@ function SubmitOrder(props) {
       address,
       phone,
     });
-    // props.onCancel();
   };
 
   const classesDivName = useClasses(hasNameInputError);
@@ -77,7 +77,7 @@ function SubmitOrder(props) {
   return (
     <form onSubmit={confirmOrderHandler}>
       <div className={classesDivName}>
-        <label htmlFor="name">Введите имя:</label>
+        <label htmlFor="name">Имя:</label>
         <input
           type="text"
           id="name"
@@ -88,7 +88,7 @@ function SubmitOrder(props) {
         />
       </div>
       <div className={classesDivAddress}>
-        <label htmlFor="address">Введите адрес:</label>
+        <label htmlFor="address">Адрес:</label>
         <input
           type="text"
           id="address"
@@ -99,7 +99,7 @@ function SubmitOrder(props) {
         />
       </div>
       <div className={classesDivPhone}>
-        <label htmlFor="phone">Введите телефон:</label>
+        <label htmlFor="phone">Телефон:</label>
         <input
           type="text"
           id="phone"
