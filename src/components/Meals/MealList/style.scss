@@ -10,6 +10,18 @@
     margin: 0;
     padding: 0;
   }
+
+  .loading {
+    text-align: center;
+    color: green;
+    font-size: large;
+  }  
+  
+  .error {
+    text-align: center;
+    color: red;
+    font-size: large;    
+  }
   
   @keyframes meals-appear {
     from {
@@ -22,4 +34,6 @@
       transform: translateY(0);
     }
   }
-  
+
+
+

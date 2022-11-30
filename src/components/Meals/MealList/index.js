@@ -27,23 +27,36 @@ const MealList = () => {
     };
 
     fetchProducts(requestOptins, manageData);
+
+    // const timer = setTimeout(() => {
+    //   fetchProducts(requestOptins, manageData);
+    // }, 1000);
+
+    // return () => clearTimeout(timer);
   }, [fetchProducts]);
 
-  const mealsList = meals.map((el) => (
-    <Item
-      key={el.id}
-      id={el.id}
-      name={el.name}
-      description={el.description}
-      price={el.price}
-    />
-  ));
+  let content = '';
+  if (isLoading) {
+    content = <p className="meals loading">Loading...</p>;
+  } else if (error) {
+    content = <p className="meals error">{error}</p>;
+  } else {
+    content = meals.map((el) => (
+      <Item
+        key={el.id}
+        id={el.id}
+        name={el.name}
+        description={el.description}
+        price={el.price}
+      />
+    ));
+  }
 
   return (
     <section className="meals">
-      {error && <p>{error}</p>}
+      {/* {error && <p>{error}</p>} */}
       <Card>
-        <ul>{mealsList}</ul>
+        <ul>{content}</ul>
       </Card>
     </section>
   );
