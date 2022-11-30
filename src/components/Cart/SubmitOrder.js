@@ -1,59 +1,105 @@
-import React, { useState } from 'react';
+import React from 'react';
+import useClasses from '../../hooks/use-classes';
+import useInput from '../../hooks/use-input';
 import styles from './SubmitOrder.module.css';
 
 function SubmitOrder(props) {
-  const [name, setName] = useState('');
-  const [adres, setAdres] = useState('');
-  const [phone, setPhone] = useState('');
+  const funcValidate = (val) => val.trim() !== '';
+  const {
+    value: name,
+    isEnteredlValid: isEnteredNameValid,
+    hasError: hasNameInputError,
+    inputChangeHandler: nameInputChangeHandler,
+    inputLostFocusHandler: nameInputLostFocusHandler,
+    resetValues: resetNameInputValues,
+  } = useInput(funcValidate);
 
+  const {
+    value: address,
+    isEnteredlValid: isEnteredAddressValid,
+    hasError: hasAddressInputError,
+    inputChangeHandler: addressInputChangeHandler,
+    inputLostFocusHandler: addressInputLostFocusHandler,
+    resetValues: resetAddressInputValues,
+  } = useInput(funcValidate);
+
+  const {
+    value: phone,
+    isEnteredlValid: isEnteredPhoneValid,
+    hasError: hasPhoneInputError,
+    inputChangeHandler: phoneInputChangeHandler,
+    inputLostFocusHandler: phoneInputLostFocusHandler,
+    resetValues: resetPhoneInputValues,
+  } = useInput(funcValidate);
+
+  let isFormValid = false;
+  if (isEnteredNameValid && isEnteredAddressValid && isEnteredPhoneValid) {
+    isFormValid = true;
+  }
   const confirmOrderHandler = (e) => {
     e.preventDefault();
+    if (!isFormValid) {
+      return;
+    }
+
     console.log(name);
-    console.log(adres);
+    console.log(address);
     console.log(phone);
+
+    resetNameInputValues();
+    resetAddressInputValues();
+    resetPhoneInputValues();
+    props.onCancel();
   };
 
-  const nameInputChangeHandler = (e) => {
-    setName(e.target.value);
-  };
+  const classesDivName = useClasses(hasNameInputError);
+  const classesDivAddress = useClasses(hasAddressInputError);
+  const classesDivPhone = useClasses(hasPhoneInputError);
 
-  const adressInputChangeHandler = (e) => {
-    setAdres(e.target.value);
-  };
+  //   const classesDivName = `${styles.control} ${
+  //     hasNameInputError ? styles.invalid : ''
+  //   }`;
 
-  const phoneInputChangeHandler = (e) => {
-    setPhone(e.target.value);
-  };
+  //   const classesDivAddress = `${styles.control} ${
+  //     hasAddressInputError ? styles.invalid : ''
+  //   }`;
+
+  //   const classesDivPhone = `${styles.control} ${
+  //     hasPhoneInputError ? styles.invalid : ''
+  //   }`;
 
   return (
     <form onSubmit={confirmOrderHandler}>
-      <div className={styles.control}>
+      <div className={classesDivName}>
         <label htmlFor="name">Введите имя:</label>
         <input
           type="text"
           id="name"
           value={name}
           onChange={nameInputChangeHandler}
+          onBlur={nameInputLostFocusHandler}
           //   placeholder="введите имя"
         />
       </div>
-      <div className={styles.control}>
-        <label htmlFor="adres">Введите адрес:</label>
+      <div className={classesDivAddress}>
+        <label htmlFor="address">Введите адрес:</label>
         <input
           type="text"
-          id="adres"
-          value={adres}
-          onChange={adressInputChangeHandler}
+          id="address"
+          value={address}
+          onChange={addressInputChangeHandler}
+          onBlur={addressInputLostFocusHandler}
           //   placeholder="введите адрес"
         />
       </div>
-      <div className={styles.control}>
+      <div className={classesDivPhone}>
         <label htmlFor="phone">Введите телефон:</label>
         <input
           type="text"
           id="phone"
           value={phone}
           onChange={phoneInputChangeHandler}
+          onBlur={phoneInputLostFocusHandler}
           //   placeholder="введите телефон"
         />
       </div>
