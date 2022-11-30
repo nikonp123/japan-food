@@ -1,19 +1,16 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendHttpRequest = async (requestOptions, manageData) => {
+  const sendHttpRequest = useCallback(async (requestOptions, manageData) => {
     setIsLoading(true);
     try {
       const response = await fetch(requestOptions.url, {
         method: requestOptions.method ? requestOptions.method : 'GET',
         headers: requestOptions.headers ? requestOptions.headers : {},
         body: requestOptions.body ? requestOptions.body : null,
-        // withCredentials: true,
-        // crossorigin: true,
-        // mode: 'no-cors',
       });
 
       if (!response.ok) {
@@ -27,7 +24,7 @@ const useHttp = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   return {
     isLoading,

@@ -22,9 +22,6 @@ const MealList = () => {
           description: mealsData[key].description,
           price: mealsData[key].price,
         });
-        // if (Object.hasOwnProperty.call(mealsData, key)) {
-        //   const element = mealsData[key];
-        // }
       }
       setMeals(loadedMeals);
     };
