@@ -4,6 +4,7 @@ import Modal from '../UI/Modal';
 import CartContext from '../../store/cart-context';
 import CartItem from './CartItem';
 import SubmitOrder from './SubmitOrder';
+import useHttp from '../../hooks/use-http';
 
 function Cart(props) {
   const cartContext = useContext(CartContext);
@@ -21,6 +22,19 @@ function Cart(props) {
 
   const orderHandler = () => {
     setIsSubmitOrderAvailable(true);
+  };
+
+  const { isLoading, error, sendHttpRequest: fetchUserData } = useHttp();
+
+  const submitOrderHandler = (userData) => {
+    const requestOptins = {
+      url: 'https://modernreactcustomhooks-default-rtdb.firebaseio.com/orders.json',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user: userData, orderedMeals: cartContext.items }),
+    };
+
+    fetchUserData(requestOptins);
   };
 
   const cartItems = (
@@ -42,7 +56,9 @@ function Cart(props) {
   const hasItems = cartContext.items.length > 0;
   let contentSubmit = '';
   if (isSubmitOrderAvailable) {
-    contentSubmit = <SubmitOrder onCancel={props.onHideCart} />;
+    contentSubmit = (
+      <SubmitOrder onCancel={props.onHideCart} onSubmit={submitOrderHandler} />
+    );
   } else {
     contentSubmit = (
       <div className="actions">

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import Header from './components/Layout/Header'
+import Header from './components/Layout/Header';
 import Meals from './components/Meals/Meals';
 import Cart from './components/Cart';
-import CartContextProvider from "./store/CartContextProvider";
+import CartContextProvider from './store/CartContextProvider';
 
 function App() {
   const [cartIsVisible, setCartIsVisible] = useState(false);
@@ -16,7 +16,7 @@ function App() {
   const hideCartHandler = () => {
     setCartIsVisible(false);
   };
-  
+
   return (
     <CartContextProvider>
       {cartIsVisible && <Cart onHideCart={hideCartHandler} />}

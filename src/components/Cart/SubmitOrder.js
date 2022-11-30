@@ -36,6 +36,7 @@ function SubmitOrder(props) {
   if (isEnteredNameValid && isEnteredAddressValid && isEnteredPhoneValid) {
     isFormValid = true;
   }
+
   const confirmOrderHandler = (e) => {
     e.preventDefault();
     if (!isFormValid) {
@@ -49,7 +50,12 @@ function SubmitOrder(props) {
     resetNameInputValues();
     resetAddressInputValues();
     resetPhoneInputValues();
-    props.onCancel();
+    props.onSubmit({
+      name,
+      address,
+      phone,
+    });
+    // props.onCancel();
   };
 
   const classesDivName = useClasses(hasNameInputError);
